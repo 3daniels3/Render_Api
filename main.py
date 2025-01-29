@@ -13,16 +13,15 @@ app.mount("/static",StaticFiles(directory="static"), name="static") # listo, aho
 
 @app.get("/")
 async def root():
-    return "hola Daniels"
+      return [
+       {"Message": "Hola, bienvenido a la Api crud FastApi"},
+        {"Message":"Ingrese a '/docs' para documentacion de paths de la api"},
+        {"Info":"Database : MongoDB Atlas y FastApi: Render"}
+             ]
+    
+        
 
-@app.get("/saludo")
-async def dicts():
-    return {
-        'Nombre': 'Daniels',
-        'Edad':22,
-        'lenguajes':['Node.js','Python'],
-        'cosa favorita': 'Mamas solteras'
-    }
+  
 
 
 @app.get("/url")
