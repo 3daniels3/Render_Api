@@ -1,4 +1,0 @@
-fastapi
-pymongo
-python-multipart
-
