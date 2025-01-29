@@ -40,19 +40,17 @@ async def user(id: str):
 
 #### POST
 
-@router.post("/", response_model=User, status_code=status.HTTP_201_CREATED) #codigo por si sale bien
-async def user(user:User):
-    # el parametro sera igual al modelo o entidad anterior
-    if type(search_user("email",user.email)) == User:
+@router.post("/", response_model=User, status_code=status.HTTP_201_CREATED)
+async def user(user: User):
+    if type(search_user("email", user.email)) == User:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="El usuario ya existe")
 
-    
     user_dict = dict(user)
     del user_dict["id"]
-     # guarda
+
     id = db_client.users.insert_one(user_dict).inserted_id
-     # muestra lo guardado
+
     new_user = user_schema(db_client.users.find_one({"_id": id}))
 
     return User(**new_user)
@@ -91,16 +89,25 @@ async def delete_user(id:str):
 
 
 
+    
 
 #filtra una funcion atravez de una funcion y un itrable
-def search_user(fiel:str,key):
-        
-        
+def search_user(fiel:str,key): 
         try:
             user=db_client.users.find_one({fiel:key})
-           
+            
             return User(**user_schema(user))
             
         except: 
             return {"Messange": "Error no se encontro el usuario"}
+
+
+# #Metodo para busqueda por email, sustituido por la funcion de arriba
+# def search_user_by_email(email: str):
+#     try:
+#         user=db_client.users.find_one({"email":email})
+#         # print(user)
+#         return User(**user_schema(user))
+#     except: 
+#         return{"Error":"no se encontro el usuario"}
  
