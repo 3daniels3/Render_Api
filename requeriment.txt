@@ -1,5 +1,0 @@
-fastapi
-pymongo
-python-multipart
-typing
-
